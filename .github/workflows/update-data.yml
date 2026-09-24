@@ -1,0 +1,52 @@
+name: Update data snapshots
+
+on:
+  schedule:
+    # Каждый день — снапшот средних цен и скидок.
+    - cron: '17 3 * * *'
+    # По воскресеньям — обновление индекса Steam-тегов.
+    - cron: '42 4 * * 0'
+  workflow_dispatch:
+    inputs:
+      tags_limit:
+        description: Сколько игр обрабатывать для индекса тегов
+        required: false
+        default: '400'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-snapshots
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+
+      - name: Снапшот цен
+        run: node scripts/snapshot-prices.mjs
+
+      - name: Индекс тегов
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '42 4 * * 0'
+        env:
+          TAG_INDEX_LIMIT: ${{ github.event.inputs.tags_limit || '400' }}
+        run: node scripts/build-tag-index.mjs
+
+      - name: Коммит изменений
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data
+          if git diff --cached --quiet; then
+            echo "Изменений нет"
+          else
+            git commit -m "chore(data): обновление снапшотов и индекса тегов"
+            git push
+          fi

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "plugins": ["react", "react-perf", "import", "promise", "typescript", "jsx-a11y", "unicorn"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn"
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "typescript/no-explicit-any": "warn",
+    "react-perf/jsx-no-new-array-as-prop": "off",
+    "react-perf/jsx-no-new-object-as-prop": "off",
+    "react-perf/jsx-no-new-function-as-prop": "off",
+    "react-perf/jsx-no-jsx-as-prop": "off",
+    "import/no-unassigned-import": "off"
+  },
+  "overrides": [
+    {
+      "files": ["scripts/**", "src/test/**"],
+      "rules": {
+        "no-await-in-loop": "off"
+      }
+    }
+  ],
+  "ignorePatterns": ["dist", "coverage", "public/data"]
+}

@@ -1,0 +1,8 @@
+# Настройки pnpm 12. Здесь разрешаем install-скрипты только проверенным пакетам.
+allowBuilds:
+  '@tailwindcss/oxide': true
+  esbuild: true
+  # msw приходит опциональным peer'ом к @vitest/mocker (Vitest 5) и в проекте не
+  # используется. pnpm 12 требует явного решения по его install-скриптам — запрещаем.
+  msw: false
+  unrs-resolver: true

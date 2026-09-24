@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>GameDeals — скидки на PC-игры</title>
+    <meta
+      name="description"
+      content="Скидки на PC-игры: каталог, сравнение цен магазинов и аналитика распродаж."
+    />
+    <meta name="author" content="Дьяченко Антон" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f6fb" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070b1a" />
+    <meta name="format-detection" content="telephone=no" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="%BASE_URL%logo.svg"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="%BASE_URL%logo-dark.svg"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link rel="apple-touch-icon" href="%BASE_URL%apple-touch-icon-180x180.png" />
+    <link rel="preconnect" href="https://www.cheapshark.com" crossorigin />
+    <link rel="preconnect" href="https://shared.fastly.steamstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://store.steampowered.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="GameDeals — скидки на PC-игры" />
+    <meta
+      property="og:description"
+      content="Каталог скидок на PC-игры, сравнение цен магазинов и аналитика распродаж."
+    />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:image" content="%BASE_URL%og-image.png" />
+    <style>
+      /* Фон до загрузки CSS, чтобы не было белой вспышки в тёмной теме. */
+      html {
+        background: #f5f6fb;
+      }
+      html.dark {
+        background: #070b1a;
+      }
+
+      /* Скелетон первого экрана: виден, пока грузится JS-бандл, и стирается при монтировании. */
+      .boot {
+        min-height: 100dvh;
+        background: #f5f6fb;
+      }
+      html.dark .boot {
+        background: #070b1a;
+      }
+      .boot-header {
+        height: 56px;
+        border-bottom: 1px solid rgb(0 0 0 / 0.058);
+        background: rgb(249 249 249 / 0.82);
+      }
+      html.dark .boot-header {
+        border-color: rgb(255 255 255 / 0.07);
+        background: rgb(32 32 32 / 0.82);
+      }
+      .boot-main {
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 24px 16px;
+      }
+      .boot-title {
+        width: 260px;
+        height: 32px;
+        border-radius: 8px;
+        background: rgb(0 0 0 / 0.07);
+      }
+      .boot-search {
+        margin-top: 20px;
+        height: 40px;
+        border-radius: 4px;
+        background: rgb(0 0 0 / 0.05);
+      }
+      .boot-grid {
+        display: grid;
+        gap: 16px;
+        margin-top: 24px;
+      }
+      .boot-card {
+        height: 420px;
+        border-radius: 12px;
+        border: 1px solid rgb(0 0 0 / 0.058);
+        background: rgb(255 255 255 / 0.7);
+      }
+      html.dark .boot-title {
+        background: rgb(255 255 255 / 0.07);
+      }
+      html.dark .boot-search {
+        background: rgb(255 255 255 / 0.05);
+      }
+      html.dark .boot-card {
+        border-color: rgb(255 255 255 / 0.07);
+        background: rgb(255 255 255 / 0.051);
+      }
+      @media (min-width: 640px) {
+        .boot-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1280px) {
+        .boot-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+    </style>
+    <script>
+      // Тема применяется до первой отрисовки, чтобы не было вспышки светлой темы.
+      ;(() => {
+        try {
+          const stored = localStorage.getItem('gd-theme')
+          const dark = stored
+            ? stored === 'dark'
+            : matchMedia('(prefers-color-scheme: dark)').matches
+          document.documentElement.classList.toggle('dark', dark)
+        } catch {
+          /* приватный режим — игнорируем */
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root">
+      <div class="boot" aria-hidden="true">
+        <div class="boot-header"></div>
+        <div class="boot-main">
+          <div class="boot-title"></div>
+          <div class="boot-search"></div>
+          <div class="boot-grid">
+            <div class="boot-card"></div>
+            <div class="boot-card"></div>
+            <div class="boot-card"></div>
+            <div class="boot-card"></div>
+            <div class="boot-card"></div>
+            <div class="boot-card"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <noscript>
+      <div style="padding: 24px; font-family: system-ui; text-align: center">
+        <h1>GameDeals</h1>
+        <p>Для работы витрины скидок нужен включённый JavaScript.</p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
